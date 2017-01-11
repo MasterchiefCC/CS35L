@@ -1,0 +1,65 @@
+1
+man -k keyword
+I read "man man"
+
+2
+which cp
+/usr/bin/cp
+which wc
+/usr/bin/wc
+
+
+3
+find /usr/bin -executable -name '?'
+
+/usr/bin/[
+/usr/bin/w
+/usr/bin/X
+
+4
+ls -l|grep emacs
+
+
+lrwxrwxrwx    1 root root          23 Dec 22  2015 emacs -> /etc/alternatives/em                 acs
+-rwxr-xr-t    1 root root    14837896 Oct  7  2015 emacs-24.3
+-rwxr-xr-x    1 root root       24800 Oct  7  2015 emacsclient
+lrwxrwxrwx    1 root root          29 Dec 22  2015 etags -> /etc/alternatives/em                 acs.etags
+-rwxr-xr-x    1 root root      103368 Oct  7  2015 etags.emacs
+
+because the first start with l so it is a link.
+
+find /usr/bin/emacs -ls
+
+
+lrwxrwxrwx    1 root root          23 Dec 22  2015 emacs -> /etc/alternatives/em                 acs
+
+5
+
+chmod filename g+s 
+command set group id to execution
+chmod filename o-x
+command remove the permission to excute from others
+
+6
+
+find ./ -type f -mtime -21
+
+7
+
+find ./ -type d -mtime -21
+
+
+8
+
+which find
+/usr/bin/find
+find /usr/bin/ -type l | wc -l
+
+9
+
+cd /usr/lib && ls -lt
+
+10
+locale based on the settings of the environment variables that control the locale
+locale gets its data from localedef
+/usr/bin/locale
