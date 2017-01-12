@@ -97,4 +97,181 @@ Exercise 1.4
 
 cat exer2.html exer2.diff >exer4.html
 
+2
+
+exer4.html enter
+
+3
+
+M-> C-r <! C-space C-s -> M-w C-r should output C-a C-y C-k
+
+4
+
+M-> C-r < ! C-space C-e M-w M-g g 301 Enter C-y
+M-g g 94 Enter C-y
+M-g g 18 Enter C-y
+
+5
+
+M-> C-r
+C-r - - - C-r Enter Backspace
+
+6 
+
+C-/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+1.5
+
+1
+
+emacs ENTER
+M-x mkdir ENTER
+junk ENTER
+
+
+2
+
+M-x cd Enter
+junk Enter
+C-x C-f hello.c Enter
+C-x C-s
+
+3
+
+M-x compile enter
+(delete make -k)
+gcc hello.c -o hello
+
+4
+
+C-x Compile enter
+./hello enter
+C-x 0 enter
+C-x C-w hello.out enter
+
+5
+
+C-x i 
+
+-*- mode: compilation; default-directory: "~/junk/" -*-
+Compilation started at Thu Jan  12 13:08:32
+
+./hello
+#include <stdio.h>
+int
+main (void)
+{
+  char n = '\n';
+  char b = '\\';
+  char q = '"';
+  char const *p = "#include <stdio.h>%cint%cmain (void)%c{%c  char n = '%cn';%c\
+  char b = '%c%c';%c  char q = '%c';%c  char const *p = %c%s%c;%c  printf (p, n\
+, n, n, n, b, n, b, b, n, q, n, q, p, q, n, n, n, n);%c  return 0;%c}%c";
+  printf (p, n, n, n, n, b, n, b, b, n, q, n, q, p, q, n, n, n, n);
+  return 0;
+}
+
+Compilation finished at Thu Jan  12 13:08:32
+
+
+1.6
+
+1
+
+C-x b
+
+2
+
+(random ()) C+j
+
+3
+
+(setq x (random)) C+j
+(setq y (random)) C+j
+(setq z (random)) C+j
+
+4
+
+(* x y z) C+j
+the number is not correct.
+I think it is so large that it can be store in the memory of one int
+
+6
+
+the rondom integers are not truly random number. There are calculated by some algorithm,
+ but it is the closed random number we can get on computer.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#include <stdio.h>
+int
+main (void)
+{
+  char n = '\n';
+  char b = '\\';
+  char q = '"';
+  char const *p = "#include <stdio.h>%cint%cmain (void)%c{%c  char n = '%cn';%c  char b = '%\
+c%c';%c  char q = '%c';%c  char const *p = %c%s%c;%c  printf (p, n, n, n, n, b, n, b, b, n, \
+q, n, q, p, q, n, n, n, n);%c  return 0;%c}%c";
+  printf (p, n, n, n, n, b, n, b, b, n, q, n, q, p, q, n, n, n, n);
+  return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

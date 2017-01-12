@@ -60,6 +60,91 @@ find /usr/bin/ -type l | wc -l
 cd /usr/lib && ls -lt
 
 10
+
 locale based on the settings of the environment variables that control the locale
 locale gets its data from localedef
 /usr/bin/locale
+
+11
+C-h a sort
+
+Buffer-menu-sort              M-x ... RET
+   Sort Tabulated List entries by the column at point.
+sort-columns                  M-x ... RET
+   Sort lines in region alphabetically by a certain range of columns.
+sort-fields                   M-x ... RET
+   Sort lines in region lexicographically by the ARGth field of each
+   line.
+sort-lines                    M-x ... RET
+   Sort lines in region alphabetically; argument means descending
+   order.
+sort-numeric-fields           M-x ... RET
+   Sort lines in region numerically by the ARGth field of each line.
+sort-pages                    M-x ... RET
+   Sort pages in region alphabetically; argument means descending
+   order.
+sort-paragraphs               M-x ... RET
+   Sort paragraphs in region alphabetically; argument means descending
+   order.
+sort-regexp-fields            M-x ... RET
+   Sort the text in the region region lexicographically.
+tabulated-list-col-sort       M-x ... RET
+   Sort Tabulated List entries by the column of the mouse click E.
+tabulated-list-sort           M-x ... RET
+   Sort Tabulated List entries by the column at point.
+
+12
+
+C-M-a
+move backward to the beginning of a defun.
+
+C-M-b
+Move backward over a balanced expression ( backward-sexp )
+
+//C-M-c
+Exit from the innermost recursive edit or minibuffer.
+
+//C-M-d
+Move forward down one level of parentheses.
+
+C-M-e
+Move forward to next end of defun.
+
+C-M-f
+Move forward across one balanced expression (sexp).
+
+C-M-g
+Does not exist
+
+C-M-h
+Put mark at end of this defun, point at beginning.
+The defun marked is the one that contains point or follows point.
+
+13
+
+C-g
+cancel current command
+
+14
+
+yank is an interactive compiled Lisp function.
+
+It is bound to C-y, <S-insertchar>, <S-insert>, <menu-bar> <edit>
+<paste>.
+
+(yank &optional ARG)
+
+Reinsert ("paste") the last stretch of killed text.
+More precisely, reinsert the most recent kill, which is the
+stretch of killed text most recently killed OR yanked.  Put point
+at the end, and set mark at the beginning without activating it.
+With just C-u as argument, put point at beginning, and mark at end.
+With argument N, reinsert the Nth most recent kill.
+
+
+15
+
+Emacs: C-x d
+Unix: cd /usr/bin/ && ls -l
+I didn't notice any difference except the color.
+
