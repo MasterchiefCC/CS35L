@@ -29,6 +29,7 @@ C-e
 C-a
 
 8
+
 using c-u to repeat some repeatly works
 
 9
@@ -120,35 +121,17 @@ C-r - - - C-r Enter Backspace
 
 C-/
 
+7
 
+8
 
+M-< M-% < o l > Enter < O l > Enter y y y y y y y
+There are 7 instances.
 
+9
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+diff -u exer1.html exer4.html >exer4.diff
+It work
 
 
 1.5
@@ -230,48 +213,7 @@ I think it is so large that it can be store in the memory of one int
 6
 
 the rondom integers are not truly random number. There are calculated by some algorithm,
- but it is the closed random number we can get on computer.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-#include <stdio.h>
-int
-main (void)
-{
-  char n = '\n';
-  char b = '\\';
-  char q = '"';
-  char const *p = "#include <stdio.h>%cint%cmain (void)%c{%c  char n = '%cn';%c  char b = '%\
-c%c';%c  char q = '%c';%c  char const *p = %c%s%c;%c  printf (p, n, n, n, n, b, n, b, b, n, \
-q, n, q, p, q, n, n, n, n);%c  return 0;%c}%c";
-  printf (p, n, n, n, n, b, n, b, b, n, q, n, q, p, q, n, n, n, n);
-  return 0;
-}
-
-
-
-
-
-
-
-
-
-
-
-
+but it is the closed random number we can get on computer.
 
 
 
