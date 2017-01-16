@@ -1,0 +1,41 @@
+
+#!/bin/bash
+
+dir=$1
+
+RESULT=`ls $dir | sort`
+HIDDEN=`ls -a $dir | grep '^\.' | sort`
+let count=0
+declare -a ARR
+
+for Hfile in $HIDDEN
+do
+      if [ -f "$dir/$Hfile" ]
+      then
+            ARR[$count]="$dir/$Hfile"
+            let count=count+1
+       fi
+done
+
+for file in $RESULT
+do
+        if [ -f "$dir/$file" ]
+        then
+            ARR[$count]="$dir/$file"
+            let count=count+1
+     fi
+done
+
+for (( i=0; i<$count; i++ ))
+do
+    for (( j=i+1; j<$count; j++ ))
+    do
+        cmp -s "${ARR[$i]}" "${ARR[$j]}"
+        if [ $? -eq 0 ]
+        then
+           rm "${ARR[$j]}"
+           ln -fP  "${ARR[$i]}" "${ARR[$j]}"
+    ARR[$j]=ARR[$i]
+        fi
+    done
+done
