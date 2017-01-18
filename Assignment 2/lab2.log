@@ -1,0 +1,220 @@
+>$ locale
+to check I am in the standard C or POXIX locale
+
+>$ export LC_ALL='C'
+to change the enironment to standard C
+
+>$ sort /usr/share/dict/words > words
+
+>$ wget http://web.cs.ucla.edu/classes/winter17/cs35L/assign/assign2.html
+follow the instructions
+
+>$ tr -c 'A-Za-z' '[\n*]' < assign2.html
+This command will output the lines with 'A-Z'and 'a-z', other lines will be replaced by a empty line.
+
+>$ tr -cs 'A-Za-z' '[\n*]' < assign2.html
+produce similar output like last command. 
+The difference between this one and last one is that 
+this one delete all line became new line.
+
+>$ tr -cs 'A-Za-z' '[\n*]' < assign2.html | sort
+output the same output like last one.
+The difference for this one is all words have been sorted.
+I can see servel examples of a word.
+
+>$ tr -cs 'A-Za-z' '[\n*]' <assign2.html | sort -u 
+output is sorted and displayed one example of a word
+
+>$ tr -cs 'A-Za-z' '[\n*]' < assign2.html | sort -u | comm - words
+This command compares words from standard input
+output:
+column 1: lines that only appear in tr -cs 'A-Za-z' '[\n*]' <assign2.html | sort -u this command
+column 2: lines that only appear in file words
+column 3: lines that appear in both files
+
+>$ tr -cs 'A-Za-z' '[\n*]' < assign2.html | sort -u | comm -23 - words
+output the lines that only appear in tr -cs 'A-Za-z' '[\n*]' <assign2.html | sort -u this command
+
+>$  wget http://mauimapp.com/moolelo/hwnwdseng.htm
+follow the instruction
+
+>$ emacs buildword
+
+#!/bin/bash
+
+#remove everything before that table
+sed '/<!DOCTYPE/,/Adopt<\/td>/d' |
+#remove everything after that table
+sed '/<\/table>/,/<\/html>/d' |
+#remove english words
+sed '/<tr>/,/<\/td>$/d' |
+#change upper case to lower case letters
+tr '[:upper:]' '[:lower:]' |
+#remove newlines
+tr -d '\r\n' |
+#change </td> to a newline
+sed 's/<\/td>/\n/g' |
+#remove html <> stuff
+sed 's/<[^>]*>//g'|
+#change , to newline
+sed 's/\,/\n/g' |
+#delete spaces
+tr -d '[:blank:]'|
+#separate words from sentence
+sed 's/ /\n/g' |
+#delete -from words
+sed '/-/d' |
+#replace ` with '
+tr "\`" "\'" |
+#remove any misspelled words
+tr -cs "pk\'mnwlhaeiou" '[\n*]'|
+#remove empty lines
+sed '/^$/d' |
+#sort
+sort -u
+
+>$ chmod u+x buildwords
+add executable permission to buildwords
+
+>$cat hwnwdseng.htm | ./buildwords > haiwords
+make haiwaiian dictionary
+
+Spelling Checking
+Misspelled English
+>$ cat assign2.html | tr -cs 'A-Za-z' '[\n*]' | tr '[:upper:]' '[:lower:]' | sort -u | comm -23 - words >misE
+>$ wc -w misE
+output:38
+
+Misspelled Haixxxx words
+>$  cat assign2.html | tr -cs 'A-Za-z' '[\n*]' | tr '[:upper:]' '[:lower:]' | sort -u | comm -23 - words >misE
+
+$ wc -w misH
+output
+215
+
+Misspelled English but not Haiwaiian
+>$cat misE| tr -cs "pk\'mnwlhaeiou" '[\n*]' |     sort -u | comm -12 - haiwords >misEnH
+Example
+halau
+po
+wiki
+
+>$cat misH |     tr -cs 'A-Za-z' '[\n*]' |     sort -u | comm -12 - words > misHaiNe
+Example:
+a
+ail
+ain
+ake
+al
+ale
+alen
+all
+amine
+amp
+ample
+an
+aph
+aul
+awk
+e
+ea
+ee
+el
+em
+emp
+en
+ep
+epa
+h
+ha
+han
+hap
+he
+hei
+hell
+hem
+hen
+hi
+hin
+ho
+how
+howe
+i
+ia
+ie
+ile
+imp
+in
+ion
+iou
+k
+keep
+kin
+kula
+l
+la
+lan
+le
+lea
+li
+like
+line
+link
+ll
+ln
+lo
+lowe
+m
+ma
+mail
+make
+man
+me
+men
+mi
+ml
+mo
+mp
+n
+name
+ne
+nee
+no
+non
+nu
+num
+o
+oe
+om
+on
+one
+op
+ope
+open
+owe
+own
+p
+pa
+pe
+pell
+people
+plea
+po
+pu
+u
+ui
+ula
+ule
+ume
+ump
+un
+uni
+w
+wa
+wan
+we
+wh
+wha
+who
+wi
+wo
