@@ -1,0 +1,33 @@
+
+#!/bin/bash
+
+#remove everything before that table
+sed '/<!DOCTYPE/,/Adopt<\/td>/d' |
+#remove everything after that table
+sed '/<\/table>/,/<\/html>/d' |
+#remove english words
+sed '/<tr>/,/<\/td>$/d' |
+#change upper case to lower case letters
+tr '[:upper:]' '[:lower:]' |
+#remove newlines
+tr -d '\r\n' |
+#change </td> to a newline
+sed 's/<\/td>/\n/g' |
+#remove html <> stuff
+sed 's/<[^>]*>//g'|
+#change , to newline
+sed 's/\,/\n/g' |
+#delete spaces
+tr -d '[:blank:]'|
+#separate words from sentence
+sed 's/ /\n/g' |
+#delete -from words
+sed '/-/d' |
+#replace ` with '
+tr "\`" "\'" |
+#remove any misspelled words
+tr -cs "pk\'mnwlhaeiou" '[\n*]'|
+#remove empty lines
+sed '/^$/d' |
+#sort
+sort -u
