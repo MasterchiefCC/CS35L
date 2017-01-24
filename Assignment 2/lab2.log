@@ -81,22 +81,23 @@ make haiwaiian dictionary
 
 Spelling Checking
 Misspelled English
->$ cat assign2.html | tr -cs 'A-Za-z' '[\n*]' | tr '[:upper:]' '[:lower:]' | sort -u | comm -23 - words >misE
+>$ cat assign2.html | tr -cs 'A-Za-z' '[\n*]' | sort -u | comm -23 - words >misE
 >$ wc -w misE
-output:38
+output:80
 
 Misspelled Haixxxx words
->$  cat assign2.html | tr -cs 'A-Za-z' '[\n*]' | tr '[:upper:]' '[:lower:]' | sort -u | comm -23 - words >misH
+>$ cat assign2.html |     tr -cs "pk\'mnwlhaeiou" '[\n*]' |     tr '[:upper:]' '[:lower:]' |     sort -u | comm -23 - haiwords >misH  
 
 $ wc -w misH
-output
-215
+output:198
 
 Misspelled English but not Haiwaiian
 >$cat misE| tr -cs "pk\'mnwlhaeiou" '[\n*]' |     sort -u | comm -12 - haiwords >misEnH
 Example
+e
 halau
-po
+i
+lau
 wiki
 
 >$cat misH |     tr -cs 'A-Za-z' '[\n*]' |     sort -u | comm -12 - words > misHaiNe
@@ -139,7 +140,6 @@ hin
 ho
 how
 howe
-i
 ia
 ie
 ile
@@ -150,9 +150,7 @@ iou
 k
 keep
 kin
-kula
 l
-la
 lan
 le
 lea
@@ -165,9 +163,7 @@ ln
 lo
 lowe
 m
-ma
 mail
-make
 man
 me
 men
@@ -184,7 +180,6 @@ non
 nu
 num
 o
-oe
 om
 on
 one
@@ -194,12 +189,10 @@ open
 owe
 own
 p
-pa
 pe
 pell
 people
 plea
-po
 pu
 u
 ui
