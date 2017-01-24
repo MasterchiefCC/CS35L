@@ -86,7 +86,7 @@ Misspelled English
 output:38
 
 Misspelled Haixxxx words
->$  cat assign2.html | tr -cs 'A-Za-z' '[\n*]' | tr '[:upper:]' '[:lower:]' | sort -u | comm -23 - words >misE
+>$  cat assign2.html | tr -cs 'A-Za-z' '[\n*]' | tr '[:upper:]' '[:lower:]' | sort -u | comm -23 - words >misH
 
 $ wc -w misH
 output
