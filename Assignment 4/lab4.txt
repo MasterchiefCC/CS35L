@@ -1,0 +1,100 @@
+>$ wget http://web.cs.ucla.edu/classes/winter16/cs35L/assign/coreutils-with-bug.tar.gz
+download the source file
+
+>$ tar -xvzf coreutils-with-bug.tar.gz
+unzip source file
+
+>$ cd coreutils-with-bug
+move to the directory
+
+>$ ./configure
+make file
+>$ make
+//error
+
+/*
+utimens.h:2:5: error: conflicting types for 'futimens'
+ int futimens (int, char const *, struct timespec const [2]);
+     ^
+In file included from utimecmp.h:25:0,
+                 from utimecmp.c:25:
+/usr/include/sys/stat.h:373:12: note: previous declaration of 'futimens' was here
+ extern int futimens (int __fd, const struct timespec __times[2]) __THROW;
+*/
+
+>$ cd ~
+>$ wget http://web.cs.ucla.edu/classes/winter16/cs35L/assign/coreutils.diff
+download patch online
+
+>$emacs coreutils.diff
+
+>$ M-% ~ ENTER ENTER yyyyy
+remove '~'
+
+>$ mv -t ~/coreutils-with-bug coreutils.diff
+move file to response directory
+
+>$ patch -p0 < coreutils.diff
+apply patch
+
+>$ make && make install
+install file
+
+// reproduce the result//
+>$ cd $tmp
+>$ touch -d '1918-11-11 11:00 GMT' wwi-armistice
+>$ touch now
+>$ sleep 1
+>$ touch now1
+>$  ~/coreutils-with-bug/src/ls -lt --full-time wwi-armistice now now1
+-rw-r--r-- 1 classgcg class 0 1918-11-11 03:00:00.000000000 -0800 wwi-armistice
+-rw-r--r-- 1 classgcg class 0 2017-02-09 22:09:23.765410669 -0800 now1
+-rw-r--r-- 1 classgcg class 0 2017-02-09 22:09:16.293211393 -0800 now
+
+use followed command in $temp directory
+>$ gdb ~/coreutils-with-bug/src/ls
+use gdb to find bug
+
+(gdb) info functions
+because it is time problems, I find compare_mtime function
+
+(gdb) break compare_mtime
+
+repeat step n to find bug
+/* bug appear :cmp_mtime called another function timespec_cmp in /lib/timespec.h:49
+timespec_cmp (struct timespec a, struct timespec b)
+{
+    int diff = a.tv_sec - b.tv_sec;
+    return diff ? diff : a.tv_nsec - b.tv_nsec;
+}
+
+(gdb)q
+
+>$ cp /lib/timespec.h ./
+copy timespec.h to main directory
+
+use emacs to fix this bug
+after fix, C-x 4 a leave log for change
+
+>$diff -u ./coreutils-with-bug/lib/timespec.h timespec.h > lab5.diff
+creat a diff patch
+
+>$ cd coreutils-with-bug/lib
+>$ patch -p0 <lab5.diff
+patch the file
+>$ make
+
+
+
+
+/*Test SEASnet Machine*/
+>$ touch -d '1918-11-11 11:00 GMT' wwi-armistice
+>$ touch now
+>$touch now1
+>$TZ=UTC0 ls -lt --full-time wwi-armistice now now1
+-rw-r--r-- 1 classgcg class 0 2054-12-17 17:28:16.000000000 +0000 wwi-armistice
+-rw-r--r-- 1 classgcg class 0 2017-02-10 07:32:19.609808000 +0000 now1
+-rw-r--r-- 1 classgcg class 0 2017-02-10 07:32:14.673920000 +0000 now
+server cannot recognize time in 1918, and it has a limit future time in 2054
+reason is that the local linux file system uses 64 bit, and the largest bit is a sign bit indicating whether the time is in the past or in the future.
+However seasnet uses 32 bit system. Thus when we check things on the seasnet computers, it will return a very future time.
