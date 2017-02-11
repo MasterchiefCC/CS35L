@@ -15,13 +15,16 @@ int cmp(const void* in1, const void* in2){
   return frobcmp(a, b);
 }
 
-inline void err() {
+inline int err() {
   if (ferror(stdin)) {
     fprintf(stderr, "Error: %d\n", errno);
-    exit(1);
+	return 1;
   }
+  return 0;
 }
+
 int main(void) {
+  int z;
   char*word;
   char**words;
   int Lcounter = 0;
@@ -29,9 +32,17 @@ int main(void) {
   word = (char*)malloc(sizeof(char));
   words = (char**)malloc(sizeof(char *));
   char pos = getchar();
-  err();
+  if (err()) {
+	  free(word);
+	  free(words);
+	  exit(1);
+  }
   char next = getchar();
-  err();
+  if (err()) {
+	  free(word);
+	  free(words);
+	  exit(1);
+  }
   while (pos != EOF && !ferror(stdin)) {
     word[Lcounter] = pos;
     char*moreLetters = (char*)realloc(word, (Lcounter + 2) * sizeof(int));
@@ -44,7 +55,7 @@ int main(void) {
     }
     if (pos == ' ') {
       words[Wcounter] = word;
-      char **moreWord = realloc(words, (Wcounter + 2) * sizeof(char*));
+      char **moreWord = (char**)realloc(words, (Wcounter + 2) * sizeof(char*));
       if (moreWord != NULL) {
 	words = moreWord;
 	Wcounter++;
@@ -65,10 +76,18 @@ int main(void) {
     else if (pos == ' '&&next == ' ') {
       while (pos == ' ') {
 	pos = getchar();
-	err();
+	if (err()) {
+		if (word != NULL)free(word);
+		for (z = 0; z < Wcounter; z++)free(words[z]);
+		exit(1);
+	}
       }
       next = getchar();
-      err();
+	  if (err()) {
+		  if (word != NULL)free(word);
+		  for (z = 0; z < Wcounter; z++)free(words[z]);
+		  exit(1);
+	  }
       Lcounter++;
       continue;
     }
@@ -79,7 +98,11 @@ int main(void) {
     }
     pos = next;
     next = getchar();
-    err();
+	if (err()) {
+		if (word != NULL)free(word);
+		for (z = 0; z < Wcounter; z++)free(words[z]);
+		exit(1);
+	}
     Lcounter++;
   }
 
