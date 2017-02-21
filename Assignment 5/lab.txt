@@ -1,0 +1,113 @@
+$> c99 -o tr2u tr2u.c
+$> c99 -o tr2b tr2b.c
+compile program
+
+/////////////////////////////////////////
+write a program to generate data for test
+$> touch input.txt producer.c
+create file
+>$head --bytes=5000001 /dev/urandom > input.txt
+>$emacs producer.c
+
+#include<stdio.h>
+int main(){
+    for(int a=0; a<500001; a++)printf("1");
+    return 0;
+}
+>$ c99 -o p producer.c
+compile file
+>$./p >input.txt
+/////////////////////////////////////////
+
+
+>$strace -c ./tr2b 1 a < input.txt > output
+% time     seconds  usecs/call     calls    errors syscall
+------ ----------- ----------- --------- --------- ----------------
+ 26.42    0.000051           5        10           read
+ 22.28    0.000043           5         9           mmap
+ 11.92    0.000023           6         4           mprotect
+  8.81    0.000017           4         4           fstat
+  7.25    0.000014           7         2           open
+  5.70    0.000011           1         8           write
+  5.18    0.000010          10         1           munmap
+  3.63    0.000007           7         1         1 access
+  3.11    0.000006           3         2           close
+  2.59    0.000005           5         1           execve
+  1.55    0.000003           3         1           brk
+  1.55    0.000003           3         1           arch_prctl
+------ ----------- ----------- --------- --------- ----------------
+100.00    0.000193                    44         1 total
+
+>$strace -c ./tr2u 1 a < input.txt > output
+% time     seconds  usecs/call     calls    errors syscall
+------ ----------- ----------- --------- --------- ----------------
+ 55.13    0.610022           1    500001           write
+ 44.86    0.496391           1    500003           read
+  0.00    0.000044          11         4           mprotect
+  0.00    0.000036           5         7           mmap
+  0.00    0.000014           7         2           open
+  0.00    0.000010          10         1           munmap
+  0.00    0.000008           4         2           fstat
+  0.00    0.000008           8         1         1 access
+  0.00    0.000007           4         2           close
+  0.00    0.000005           5         1           execve
+  0.00    0.000004           4         1           brk
+  0.00    0.000003           3         1           arch_prctl
+------ ----------- ----------- --------- --------- ----------------
+100.00    1.106552               1000026         1 total
+the buffered version(getchar()) has much fewer system calls
+
+
+$>strace -c ./tr2u 1 a < input.txt
+call     calls    errors syscall
+------ ----------- ----------- --------- --------- ----------------
+ 55.80    0.609394           1    500001           write
+ 44.19    0.482537           1    500003           read
+  0.00    0.000037           5         7           mmap
+  0.00    0.000035           9         4           mprotect
+  0.00    0.000018          18         1           execve
+  0.00    0.000014           7         2           open
+  0.00    0.000010          10         1           munmap
+  0.00    0.000007           4         2           fstat
+  0.00    0.000006           3         2           close
+  0.00    0.000006           6         1         1 access
+  0.00    0.000004           4         1           brk
+  0.00    0.000003           3         1           arch_prctl
+------ ----------- ----------- --------- --------- ----------------
+100.00    1.092071               1000026         1 total
+
+$>strace -c ./tr2b 1 a < input.txt
+usecs/call     calls    errors syscall
+------ ----------- ----------- --------- --------- ----------------
+ 61.48    0.000300           1       489           write
+ 12.70    0.000062           7         9           mmap
+  7.58    0.000037           4        10           read
+  4.92    0.000024           6         4           mprotect
+  3.28    0.000016           4         4           fstat
+  2.66    0.000013           7         2           open
+  1.84    0.000009           9         1           munmap
+  1.43    0.000007           7         1         1 access
+  1.43    0.000007           7         1           execve
+  1.23    0.000006           3         2           close
+  0.82    0.000004           4         1           brk
+  0.61    0.000003           3         1           arch_prctl
+------ ----------- ----------- --------- --------- ----------------
+100.00    0.000488                   525         1 total
+
+In this case, the buffered version also has much fewer system calls.
+Also, for the buffered version, copying a file to the terminal
+uses much more system calls than just writing to another file.
+
+For the unbuffered version, we have 5M write calls, which is expected.
+We have one more read calls because we used fstat to read the file information.
+
+>$ time ./tr2b 1 2 < input.txt > output
+real    0m0.058s
+user    0m0.014s
+sys     0m0.000s
+>$time ./tr2u 1 2 < input.txt > output
+real    0m0.590s
+user    0m0.023s
+sys     0m0.533s
+
+buffered version is faster beacause it uses much fewer system call

@@ -1,0 +1,100 @@
+//10 lines
+>$ time ./sfrob < input.txt
+real	0m0.002s
+user	0m0.001s
+sys	0m0.000s
+
+>$ time ./sfrobu < input.txt
+real	0m0.002s
+user	0m0.000s
+sys	0m0.001s
+
+>$ time ./sfrobs < input.txt
+real	0m0.011s
+user	0m0.004s
+sys	0m0.008s
+
+//100 lines
+time ./sfrob < input.txt
+real 0m0.002s
+user 0m0.002s
+sys  0m0.001s
+
+>$ time ./sfrobu < input.txt
+real	0m0.003s
+user	0m0.000s
+sys	0m0.002s
+
+>$ time ./sfrobs < input.txt
+real	0m0.009s
+user	0m0.004s
+sys	0m0.004s
+
+//1000 lines
+>$time ./sfrob < input.txt
+real   0m0.006s
+user   0m0.003s
+sys    0m0.003s
+
+>$ time ./sfrobu < input.txt
+real	0m0.007s
+user	0m0.002s
+sys	0m0.004s
+
+>$ time ./sfrobs < input.txt
+real	0m0.012s
+user	0m0.007s
+sys	0m0.006s
+
+//10000 lines
+>$time ./sfrob < input.txt
+real   0m0.054s
+user   0m0.038s
+sys    0m0.013s
+
+>$ time ./sfrobu < input.txt
+real	0m0.057s
+user	0m0.016s
+sys	0m0.035s
+
+>$ time ./sfrobs < input.txt
+real	0m0.052s
+user	0m0.037s
+sys	0m0.019s
+
+100000 lines
+>$ time ./sfrob < input.txt
+real	0m1.018s
+user	0m0.379s
+sys	0m0.118s
+
+>$ time ./sfrobu < input.txt
+real	0m0.940s
+user	0m0.231s
+sys	0m0.363s
+
+>$ time ./sfrobs < input.txt
+real	0m1.039s
+user	0m0.414s
+sys	0m0.087s
+
+//1000000 lines
+>$time ./sfrob < input.txt
+real   0m12.718s
+user   0m4.272s
+sys    0m1.252s
+
+>$ time ./sfrobu < input.txt
+real	0m11.288s
+user	0m2.417s
+sys	0m3.317s
+
+>$ time ./sfrobs < input.txt
+real	0m12.866s
+user	0m4.377s
+sys	0m0.869s
+
+Clearly, the shell script version outplays all the above.
+
+my program sfrob / sfrobu does error checking reading /writing each bytes,
+which should have an impact on time.
