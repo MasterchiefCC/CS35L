@@ -1,0 +1,29 @@
+>$ od -tf -N 80000000 < /dev/urandom | sed 's/^[0-7]* *//' | tr -s ' ' '\n' >temp
+-tf for floating point;
+each double is 8 bytes,so -N 80000000 for 10,000,000 numbers;
+commands sed and tr changed to ideal format.
+
+>$ time -p sort -g temp > /dev/null
+real 37.75
+user 198.18
+sys 0.59
+
+>$ time -p sort -g --parallel=1 temp > /dev/null
+real 182.99
+user 182.57
+sys 0.40
+
+>$ time -p sort -g --parallel=2 temp > /dev/null
+real 99.52
+user 189.70
+sys 0.38
+
+>$ time -p sort -g --parallel=3 temp > /dev/null
+real 57.45
+user 195.34
+sys 0.44
+
+>$ time -p sort -g --parallel=8 temp > /dev/null
+real 39.90
+user 219.53
+sys 0.59
