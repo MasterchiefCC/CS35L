@@ -1,0 +1,28 @@
+1
+Yes.
+Becasue the private key is on teammate's compter, and they don't have access to those private key, 
+and those original files have been encrypted by public key, and
+all the tranfering data are garbled, the data is safe.
+
+
+
+1)No
+other people would be able to access the private key during authentication session,
+So it is not safe the private key have been compromised. As a result, they can access to our private key and decrypter.
+The data is not safe.
+
+2)No
+Not safe, because other team can have access to our system files, 
+which including the ssh folders which contain all kind of keys including private and public keys.
+As a result, they can not only decrypt our message, but send our fake file or data.
+The data is not safe.
+
+
+2
+This command will check whether or not the public key and signatures match or not.
+While the file is tranfering, it can be intercept by other's, and other people going
+can exchange the signatures( intercept guy's public key and a key will be trigged by this public key), and send it to receiver.
+gpg --verify will decrypt those files with some bad function. Which could cause damge to the files.
+
+solution is the built a trust third party company to deal with file transfer.
+
