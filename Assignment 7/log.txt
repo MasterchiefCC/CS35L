@@ -1,0 +1,60 @@
+restart the lab computer to start ubuntu system
+select try ubuntu
+
+C-M t get into command line mode
+
+Install openssh
+>$ sudo apt-get install openssh-server
+>$ sudo apt-get install openssh-client
+
+Set client
+>$ ssh-keygen
+The password is: IamPasswd
+generate and authenticate RSA keys for SSH 
+
+ip address
+>$ifconfig
+//because I didn't find my groupmate, I used my computer, one of my friend's computer and my roommate's computer connected to three different network to simulate this situation
+My:10.97.85.184
+Roommate:10.97.85.202
+Friend:169.232.101.82
+
+Setup clients account
+My:
+>$ sudo useradd -d /home/CC/ -m CC
+>$ sudo passwd what
+>$ cd /home/CC/
+>$ sudo mkdir .ssh
+>$ sudo chown -R CC .ssh
+>$ sudo chmod 700 .ssh
+
+Friend's:
+>$ sudo useradd -d /home/TJ/ -m TJ
+>$ sudo passwd what
+>$ cd /home/TJ/
+>$ sudo mkdir .ssh
+>$ sudo chown -R TJ .ssh
+>$ sudo chmod 700 .ssh
+
+roommate's:
+>$ sudo useradd -d /home/R/ -m CC
+>$ sudo passwd what
+>$ cd /home/R/
+>$ sudo mkdir .ssh
+>$ sudo chown -R R .ssh
+>$ sudo chmod 700 .ssh
+
+Client:
+>$ ssh-copy-id -i CC@10.97.85.184
+//pass my public key to other people's computer
+>$ ssh-add
+//let computer memorize password for me
+>$ ssh CC@10.97.85.184
+login into other people's sever
+>$ ssh -X CC@10.97.85.184
+To log in with the ability to open programs.
+
+Similar with other people, except the IPaddress
+
+Serve:
+other people could do the same above if they have my ip address
