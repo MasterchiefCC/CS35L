@@ -1,0 +1,177 @@
+1)
+>$ git clone ~eggert/src/gnu/diffutils
+copy the Diffutils repository
+
+2)
+>$cd diffutils
+move to repository
+
+>$git log > log.txt
+get the log
+
+3)
+>$git tag>tag.txt
+
+4)
+>$emacs log.txt
+C-s maint: quote 'like this' or "like this", not `like this'
+I find the patch: 62ca21c8c1a5aa3488589dcb191a4ef04ae9ed4f
+C-x C-c
+Exit emacs
+
+>$git format-patch -1 62ca21c8c1a5aa3488589dcb191a4ef04ae9ed4f --stdout > quote-patch.txt
+generate patch
+
+
+5)
+$>git checkout -b 'my3.0' 'v3.0'
+
+6)
+$ patch -p1 < quote-patch.txt
+can't find file to patch
+HACKING
+doc/diffutils.texi
+man/help2man
+
+7)
+$>git status
+# On branch my3.0
+# Changes not staged for commit:
+#   (use "git add <file>..." to update what will be committed)
+#   (use "git checkout -- <file>..." to discard changes in working directory)
+#
+#       modified:   NEWS
+#       modified:   README
+#       modified:   TODO
+#       modified:   doc/diagmeet.note
+#       modified:   ms/config.bat
+#       modified:   ms/config.site
+#       modified:   po/en.po
+#       modified:   src/analyze.c
+#       modified:   src/cmp.c
+#       modified:   src/context.c
+#       modified:   src/diff.c
+#       modified:   src/diff.h
+#       modified:   src/diff3.c
+#       modified:   src/dir.c
+#       modified:   src/ifdef.c
+#       modified:   src/io.c
+#       modified:   src/sdiff.c
+#       modified:   src/side.c
+#       modified:   src/system.h
+#       modified:   src/util.c
+#       modified:   tests/help-version
+#
+# Untracked files:
+#   (use "git add <file>..." to include in what will be committed)
+#
+#       NEWS.orig
+#       README-hacking.orig
+#       README-hacking.rej
+#       README.orig
+#       README.rej
+#       cfg.mk.orig
+#       cfg.mk.rej
+#       log.txt
+#       ms/config.site.orig
+#       quote-patch.txt
+#       src/cmp.c.orig
+#       src/context.c.orig
+#       src/diff.c.orig
+#       src/diff.c.rej
+#       src/diff.h.orig
+#       src/diff3.c.orig
+#       src/diff3.c.rej
+#       src/dir.c.orig
+#       src/sdiff.c.orig
+#       src/system.h.orig
+#       src/util.c.orig
+#       tag.txt
+#       tests/help-version.orig
+no changes added to commit (use "git add" and/or "git commit -a")
+
+8)
+C-x v =
+samilar with diff which can be complete in editor
+C-x v u
+revert changes
+
+9)
+$ emacs NEWS
+$ emacs README
+$ emacs TODO
+$ emacs doc/diagmeet.note
+$ emacs ms/config.bat
+$ emacs ms/config.site
+$ emacs po/en.po
+$ emacs src/diff.h
+$ emacs system.h
+$ emacs src/system.h
+$ emacs tests/help-version
+Use command C-x v = to revert all file above
+
+
+analyze.c: all
+cmp.c: 36, 364, 377
+context.c: C-x v =
+diff.c: 40, 57 (3 lines there), 92
+diff3.c: 35, 159, 1475
+dir.c: 87, 125, 234
+ifdef.c: all
+io.c: all
+sdiff.c: 35, 92, 747
+side.c: all
+util.c: 27, 121, 146, 190, 241, 270, 650
+Use command C-x v = to open vc-diff mode to check change log for that file and change lines I should revert.
+and I used command M-% to change the first ' with `
+
+10)
+The merge confilt because line numbers and actual context don't match;
+diff.c: I used command M-% changed ` to ' and open vc-diff mode to search those lines;
+diff3.c same as diff.c
+
+11. Remove untracked files
+
+>$find . -type f -name '*.orig' -delete
+
+>$find . -type f -name '*.rej' -delete
+
+Remove all untracked files
+
+12)
+git status gives us:
+
+#	modified:   src/cmp.c
+#	modified:   src/diff.c
+#	modified:   src/diff3.c
+#	modified:   src/dir.c
+#	modified:   src/sdiff.c
+#	modified:   src/util.c
+
+It's half a dozen of files
+
+Patch:
+git diff > quote-3.0-patch.txt
+
+13)
+
+>$./bootstrap
+>$./configure
+>$make
+>$./src/diff . -
+and
+./src/diff --help
+
+14)
+>$mkdir diffutils-3.0
+>$mkdir diffutils-3.0-patch
+>$git clone ~eggert/src/gnu/diffutils diffutils-3.0-orig
+copy the file to diffutils-3.0-orig
+>$cd diffutils-3.0-orig
+>$git checkout 'v3.0' -b 'o3.0'
+>$cp ./src/*.c ../diffutils-3.0/
+copy the file to target folder
+>$./diffutils/src/diff -pru diffutils-3.0 diffutils-3.0-patch >quote-3.0-test.txt
+
+15)
+>$diff -u quote-3.0-test.txt diffutils/quote-3.0-patch.txt

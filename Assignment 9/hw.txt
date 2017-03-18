@@ -1,0 +1,47 @@
+2)
+>$cd diffutils
+>$git checkout -b 'quote' 'v3.0'
+
+3)
+>$patch -p1 < quote-3.0-patch.txt 
+
+4)
+>$emacs
+C-x 4 a
+
+5)
+I copy the context in log.txt to ChangLog
+
+6)
+>$git commit -aF ChangeLog
+
+7)
+
+>$git format-patch -1 --stdout > formatted-patch.txt
+
+8)
+>$mv "partner.txt" "patch.txt"
+>$git checkout -b 'partner' 'v3.0'
+call the new branch to pratner
+>$git am patch.txt
+apply the patch
+>$./boostrap
+>$patch -p0 < gets.diff
+>$./configure
+>$make
+>$./src/diff . -
+>$./src/diff . --help
+there is not appear `
+
+9)
+>$make distdir
+creat a new folder diffutils-3.0.1-d400
+>$cd diffutils-3.0.1-d400
+>$cat ChangeLog
+I have maintain the changelog
+
+10)
+>$git clone ~eggert/src/gnu/emacs eggert
+>$cd eggert
+>$gitk
+On my serve gitk: command not found
